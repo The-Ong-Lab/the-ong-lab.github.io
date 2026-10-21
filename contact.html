@@ -4,9 +4,25 @@
 <main>
 <section class="wrap page-hero"><p class="eyebrow">Contact</p><h1>Get in touch</h1></section>
 <section class="section" style="padding-top:8px"><div class="wrap cols">
-  <div class="col contact-card"><h3>Email</h3>
-    <div class="email-row"><code>cjong@bu.edu</code><button class="copy" type="button" data-copy="cjong@bu.edu">Copy</button></div>
-    <p class="muted" style="font-size:.95rem">Prospective students: see <a href="join.html">Join the Lab</a> for what to include.</p></div>
+  <div class="col contact-card"><h3>Send us a message</h3>
+    <p class="muted" style="font-size:.95rem">Messages go to our lab coordinator, who will reply by email. Prospective students: see <a href="join.html">Join the Lab</a> for what to include.</p>
+    <!-- To change where messages go, replace YOUR_FORM_ID below with the ID from your Formspree form. -->
+    <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <label>Name<input type="text" name="name" autocomplete="name" required></label>
+      <label>Email<input type="email" name="email" autocomplete="email" required></label>
+      <label>I am a
+        <select name="inquiry_type">
+          <option>Prospective student or trainee</option>
+          <option>Prospective postdoc or staff applicant</option>
+          <option>Collaborator or researcher</option>
+          <option>Other</option>
+        </select></label>
+      <label>Message<textarea name="message" rows="6" required></textarea></label>
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+      <input type="hidden" name="_subject" value="Ong Lab website inquiry">
+      <button class="btn primary" type="submit">Send message</button>
+      <p class="form-status" role="status" aria-live="polite"></p>
+    </form></div>
   <div class="col contact-card"><h3>Address</h3>
     <p>The Ong Lab<br>Division of Neurocritical Care, Department of Neurology<br>Boston Medical Center and Boston University Chobanian &amp; Avedisian School of Medicine<br>85 East Concord Street, Suite 1116<br>Boston, MA 02118</p>
     <a href="https://www.google.com/maps/search/?api=1&amp;query=85+East+Concord+Street+Boston+MA+02118">Open in Google Maps</a></div>
@@ -14,11 +30,18 @@
 </main>
 <footer class="site-foot"><div class="wrap">
 <div><b>The Ong Lab</b><p>Division of Neurocritical Care, Department of Neurology<br>Boston Medical Center and Boston University Chobanian &amp; Avedisian School of Medicine</p></div>
-<div><p>85 East Concord Street, Suite 1116<br>Boston, MA 02118<br>cjong@bu.edu</p></div>
+<div><p>85 East Concord Street, Suite 1116<br>Boston, MA 02118<br><a href="contact.html">Contact the lab</a></p></div>
 <ul><li><a href="https://profiles.bu.edu/Charlene.Ong">BU Profile</a></li><li><a href="https://www.ncbi.nlm.nih.gov/myncbi/browse/collection/46863183">NCBI My Bibliography</a></li><li><a href="https://orcid.org/0000-0003-2377-3025">ORCID</a></li><li><a href="https://www.bumc.bu.edu/evanscenteribr/2025/12/08/pre-arc-vital-visionary-integration-of-technology-ai-and-learning-in-critical-illness/">VITAL ARC</a></li></ul>
 </div></footer>
 <script>
 document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){var t=b.getAttribute('data-copy');var done=function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1600)};try{navigator.clipboard.writeText(t).then(done,function(){sel(b)})}catch(x){sel(b)}})});
 document.querySelectorAll('.logos img').forEach(function(i){var miss=function(){i.parentNode.classList.add('missing')};if(i.complete&&i.naturalWidth===0)miss();i.addEventListener('error',miss)});
 function sel(b){var c=b.previousElementSibling;var r=document.createRange();r.selectNodeContents(c);var s=getSelection();s.removeAllRanges();s.addRange(r);}
+</script><script>
+(function(){var f=document.querySelector('.contact-form');if(!f)return;var st=f.querySelector('.form-status'),btn=f.querySelector('button');
+f.addEventListener('submit',function(e){e.preventDefault();btn.disabled=true;st.textContent='Sending...';
+fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){
+if(r.ok){f.reset();st.textContent='Thank you. Your message was sent, and our lab coordinator will be in touch.';}
+else{st.textContent='Sorry, the message could not be sent. Please try again in a few minutes.';}
+}).catch(function(){st.textContent='Sorry, the message could not be sent. Please check your connection and try again.';}).finally(function(){btn.disabled=false;});});})();
 </script></body></html>
